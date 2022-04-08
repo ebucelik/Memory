@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import ComposableArchitecture
 
-public typealias MemoryViewStore = ViewStore<MemoryUIKitState, MemoryUIKitAction>
+public typealias MemoryViewStore = ViewStore<MemoryState, MemoryAction>
 
 class MemoryUIKitController: UIViewController {
 
@@ -61,6 +61,8 @@ class MemoryUIKitController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        navigationController?.navigationBar.topItem?.title = "Memory"
 
         viewStore.send(.startGame)
     }

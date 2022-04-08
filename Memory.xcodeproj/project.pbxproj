@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		71361D3027F1D83100AE7E71 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 71361D2F27F1D83100AE7E71 /* ComposableArchitecture */; };
-		71361D3227F1D8D000AE7E71 /* MemoryUIKitCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71361D3127F1D8D000AE7E71 /* MemoryUIKitCore.swift */; };
+		71361D3227F1D8D000AE7E71 /* MemoryCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71361D3127F1D8D000AE7E71 /* MemoryCore.swift */; };
 		71361D3427F1D8F200AE7E71 /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71361D3327F1D8F200AE7E71 /* Loadable.swift */; };
 		7143454E27F1039F0094D4DE /* MemoryUIKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143454D27F1039F0094D4DE /* MemoryUIKitController.swift */; };
 		7143455027F103B60094D4DE /* MemorySwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143454F27F103B60094D4DE /* MemorySwiftUI.swift */; };
 		7143455227F107FC0094D4DE /* MemoryUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143455127F107FC0094D4DE /* MemoryUIKitView.swift */; };
 		7143455427F10A9E0094D4DE /* MemoryUIKitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143455327F10A9E0094D4DE /* MemoryUIKitCell.swift */; };
+		7162DD1828009AEB00096B3C /* SwiftHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 7162DD1728009AEB00096B3C /* SwiftHelper */; };
 		71C000EE27E73F3200F3ED47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C000ED27E73F3200F3ED47 /* AppDelegate.swift */; };
 		71C000F027E73F3200F3ED47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C000EF27E73F3200F3ED47 /* SceneDelegate.swift */; };
 		71C000F227E73F3200F3ED47 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C000F127E73F3200F3ED47 /* ViewController.swift */; };
@@ -22,12 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		71361D3127F1D8D000AE7E71 /* MemoryUIKitCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUIKitCore.swift; sourceTree = "<group>"; };
+		71361D3127F1D8D000AE7E71 /* MemoryCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCore.swift; sourceTree = "<group>"; };
 		71361D3327F1D8F200AE7E71 /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		7143454D27F1039F0094D4DE /* MemoryUIKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUIKitController.swift; sourceTree = "<group>"; };
 		7143454F27F103B60094D4DE /* MemorySwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorySwiftUI.swift; sourceTree = "<group>"; };
 		7143455127F107FC0094D4DE /* MemoryUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUIKitView.swift; sourceTree = "<group>"; };
 		7143455327F10A9E0094D4DE /* MemoryUIKitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUIKitCell.swift; sourceTree = "<group>"; };
+		71484E6028009AC400E41407 /* SwiftHelper */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftHelper; path = ../../../../Projects/SwiftHelper; sourceTree = "<group>"; };
 		71C000EA27E73F3200F3ED47 /* Memory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C000ED27E73F3200F3ED47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71C000EF27E73F3200F3ED47 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7162DD1828009AEB00096B3C /* SwiftHelper in Frameworks */,
 				71361D3027F1D83100AE7E71 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,11 +70,36 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		71484DD72800765400E41407 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				71361D3127F1D8D000AE7E71 /* MemoryCore.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		71484DF02800958200E41407 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		71484E5F28009AC400E41407 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				71484E6028009AC400E41407 /* SwiftHelper */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		71C000E127E73F3200F3ED47 = {
 			isa = PBXGroup;
 			children = (
 				71C000EC27E73F3200F3ED47 /* Memory */,
+				71484E5F28009AC400E41407 /* Packages */,
 				71C000EB27E73F3200F3ED47 /* Products */,
+				71484DF02800958200E41407 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,9 +114,9 @@
 		71C000EC27E73F3200F3ED47 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				71484DD72800765400E41407 /* Shared */,
 				7143454C27F0FD1D0094D4DE /* SwiftUI */,
 				7143454B27F0FD120094D4DE /* UIKit */,
-				71361D3127F1D8D000AE7E71 /* MemoryUIKitCore.swift */,
 				71C000ED27E73F3200F3ED47 /* AppDelegate.swift */,
 				71C000EF27E73F3200F3ED47 /* SceneDelegate.swift */,
 				71C000F127E73F3200F3ED47 /* ViewController.swift */,
@@ -118,6 +146,7 @@
 			name = Memory;
 			packageProductDependencies = (
 				71361D2F27F1D83100AE7E71 /* ComposableArchitecture */,
+				7162DD1728009AEB00096B3C /* SwiftHelper */,
 			);
 			productName = Memory;
 			productReference = 71C000EA27E73F3200F3ED47 /* Memory.app */;
@@ -176,7 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71361D3227F1D8D000AE7E71 /* MemoryUIKitCore.swift in Sources */,
+				71361D3227F1D8D000AE7E71 /* MemoryCore.swift in Sources */,
 				71C000F227E73F3200F3ED47 /* ViewController.swift in Sources */,
 				71361D3427F1D8F200AE7E71 /* Loadable.swift in Sources */,
 				7143455427F10A9E0094D4DE /* MemoryUIKitCell.swift in Sources */,
@@ -413,6 +442,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 71361D2E27F1D83100AE7E71 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		7162DD1728009AEB00096B3C /* SwiftHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

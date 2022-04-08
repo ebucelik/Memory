@@ -1,5 +1,5 @@
 //
-//  MemoryUIKitCore.swift
+//  MemoryCore.swift
 //  Memory
 //
 //  Created by Ing. Ebu Celik on 28.03.22.
@@ -9,7 +9,7 @@ import Combine
 import ComposableArchitecture
 import UIKit
 
-public struct MemoryUIKitState: Equatable {
+public struct MemoryState: Equatable {
     var defaultMemoryCard = UIImage(named: "pokerBackground")!
     var emptyMemoryCard = UIImage()
 
@@ -19,7 +19,7 @@ public struct MemoryUIKitState: Equatable {
     var memoryCardsState: [UIImage] = []
 }
 
-public enum MemoryUIKitAction {
+public enum MemoryAction {
     case startGame
     case assignAllCards
     case openCard(index: Int)
@@ -28,9 +28,9 @@ public enum MemoryUIKitAction {
     case endGame
 }
 
-public struct MemoryUIKitEnvironment {}
+public struct MemoryEnvironment {}
 
-let memoryUIKitReducer = Reducer<MemoryUIKitState, MemoryUIKitAction, MemoryUIKitEnvironment> { state, action, _ in
+let memoryReducer = Reducer<MemoryState, MemoryAction, MemoryEnvironment> { state, action, _ in
     switch action {
     case .startGame:
         struct GameID: Hashable {}
@@ -46,15 +46,15 @@ let memoryUIKitReducer = Reducer<MemoryUIKitState, MemoryUIKitAction, MemoryUIKi
         let images = ["boat", "camper", "flight", "helicopter", "sportive-car", "trailer"]
         var memoryCards: [UIImage] = []
 
-        for index in 0...5 {
+        for index in 0..<images.count {
             memoryCards.append(UIImage(named: images[index]) ?? state.emptyMemoryCard)
             memoryCards.append(UIImage(named: images[index]) ?? state.emptyMemoryCard)
         }
 
         let shuffledMemoryCards = memoryCards.shuffled()
 
-        state.memoryCardsStateChanged = .loaded(shuffledMemoryCards)
         state.memoryCards = shuffledMemoryCards
+        state.memoryCardsStateChanged = .loaded(shuffledMemoryCards)
 
         return Effect(value: .closeAllCards)
             .debounce(id: GameID(), for: 3.0, scheduler: DispatchQueue.main)
@@ -110,14 +110,8 @@ let memoryUIKitReducer = Reducer<MemoryUIKitState, MemoryUIKitAction, MemoryUIKi
 
     case .closeAllCards:
 
-        var closedMemoryCards: [UIImage] = []
-
-        for _ in 0...11 {
-            closedMemoryCards.append(state.defaultMemoryCard)
-        }
-
-        state.memoryCardsStateChanged = .loaded(closedMemoryCards)
-        state.memoryCardsState = closedMemoryCards
+        state.memoryCardsState = (0..<12).compactMap({ _ in return state.defaultMemoryCard })
+        state.memoryCardsStateChanged = .loaded(state.memoryCardsState)
 
         return .none
 

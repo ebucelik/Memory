@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import SwiftHelper
 
 class ViewController: UIViewController {
 
@@ -15,7 +16,7 @@ class ViewController: UIViewController {
         button.setTitle("Open Memory with UIKit", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .white
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 8
         return button
@@ -26,7 +27,7 @@ class ViewController: UIViewController {
         button.setTitle("Open Memory with SwiftUI", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .white
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 8
         return button
@@ -41,7 +42,7 @@ class ViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [buttonUIKit, buttonSwiftUI])
         stackView.axis = .vertical
         stackView.spacing = 20
-        stackView.layoutMargins = .init(top: 0, left: 20, bottom: 0, right: 20)
+        stackView.layoutMargins = .init(horizontal: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -52,19 +53,21 @@ class ViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+
+        navigationController?.navigationBar.tintColor = .black
     }
 
     @objc func openMemoryUIKit() {
-        let memoryUIKitController = MemoryUIKitController(store: .init(initialState: MemoryUIKitState(),
-                                                                       reducer: memoryUIKitReducer,
-                                                                       environment: MemoryUIKitEnvironment()))
+        let memoryUIKitController = MemoryUIKitController(store: .init(initialState: MemoryState(),
+                                                                       reducer: memoryReducer,
+                                                                       environment: MemoryEnvironment()))
         navigationController?.pushViewController(memoryUIKitController, animated: true)
     }
 
     @objc func openMemorySwiftUI() {
-        let memorySwiftUI = UIHostingController(rootView: MemorySwiftUI(store: .init(initialState: MemoryUIKitState(),
-                                                                                     reducer: memoryUIKitReducer,
-                                                                                     environment: MemoryUIKitEnvironment())))
+        let memorySwiftUI = UIHostingController(rootView: MemorySwiftUI(store: .init(initialState: MemoryState(),
+                                                                                     reducer: memoryReducer,
+                                                                                     environment: MemoryEnvironment())))
         navigationController?.pushViewController(memorySwiftUI, animated: true)
     }
 }
