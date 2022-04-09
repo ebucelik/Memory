@@ -54,6 +54,7 @@ class MemoryUIKitController: UIViewController {
         }
 
         memoryUIKitView.playAgain = { [self] in
+            memoryUIKitView.successfulMessageLabel.isHidden = true
             memoryUIKitView.playAgainButton.isHidden = true
             viewStore.send(.startGame)
         }
@@ -64,6 +65,8 @@ class MemoryUIKitController: UIViewController {
 
         navigationController?.navigationBar.topItem?.title = "Memory"
 
+        setupRightBarButtonItems(chances: viewStore.chances)
+
         viewStore.send(.startGame)
     }
 
@@ -73,6 +76,48 @@ class MemoryUIKitController: UIViewController {
                 self.memoryCardsStateChanged(state: $0)
             }
             .store(in: &cancellable)
+
+        viewStore.publisher.chances
+            .sink {
+                self.setupRightBarButtonItems(chances: $0)
+            }
+            .store(in: &cancellable)
+
+        viewStore.publisher.winOrLost
+            .sink { [self] winOrLost in
+                switch winOrLost {
+                case .win:
+                    memoryUIKitView.successfulMessageLabel.text = "Congratulations! \nYou won this game!"
+                    viewStore.send(.endGame)
+
+                case .lost:
+                    memoryUIKitView.successfulMessageLabel.text = "You lost all your chances. Maybe next time!"
+                    viewStore.send(.endGame)
+
+                case .none:
+                    break
+                }
+            }
+            .store(in: &cancellable)
+    }
+
+    func setupRightBarButtonItems(chances: Int) {
+        let rightBarButtonItems: [UIImageView] = {
+            (0..<chances).compactMap({ _ in
+                let uiImageView = UIImageView(image: UIImage(systemName: "heart.fill"))
+                uiImageView.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+                uiImageView.contentMode = .scaleAspectFit
+                uiImageView.tintColor = .red
+                return uiImageView
+            })
+        }()
+
+        let stackView = UIStackView(arrangedSubviews: rightBarButtonItems)
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+
+        let barButtonItem = UIBarButtonItem(customView: stackView)
+        self.navigationItem.setRightBarButton(barButtonItem, animated: true)
     }
 
     func memoryCardsStateChanged(state: Loadable<[UIImage]>) {
@@ -92,16 +137,6 @@ class MemoryUIKitController: UIViewController {
             memoryUIKitView.loadingIndicator.startAnimating()
             memoryUIKitView.loadingIndicator.isHidden = false
             memoryUIKitView.collectionView.isHidden = true
-        }
-    }
-
-    func closedMemoryCardsStateChanged(state: Loadable<[UIImage]>) {
-        switch state {
-        case .none, .loading, .refreshing, .error:
-            break
-
-        case let .loaded(closedMemoryCards):
-            memoryUIKitView.memoryCards = closedMemoryCards
         }
     }
 }

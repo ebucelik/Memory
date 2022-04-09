@@ -29,6 +29,7 @@ class MemoryUIKitView: UIView {
             }
 
             if memoryCards.isEmpty {
+                successfulMessageLabel.isHidden = false
                 playAgainButton.isHidden = false
             }
         }
@@ -49,6 +50,15 @@ class MemoryUIKitView: UIView {
         loadingIndicator.style = .large
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         return loadingIndicator
+    }()
+
+    let successfulMessageLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
     let playAgainButton: UIButton = {
@@ -77,6 +87,7 @@ class MemoryUIKitView: UIView {
 
         addSubview(loadingIndicator)
         addSubview(collectionView)
+        addSubview(successfulMessageLabel)
         addSubview(playAgainButton)
 
         NSLayoutConstraint.activate([
@@ -87,8 +98,11 @@ class MemoryUIKitView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
             collectionView.centerYAnchor.constraint(equalTo: centerYAnchor),
 
+            successfulMessageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            successfulMessageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50),
+
+            playAgainButton.topAnchor.constraint(equalTo: successfulMessageLabel.bottomAnchor, constant: 20),
             playAgainButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            playAgainButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             playAgainButton.heightAnchor.constraint(equalToConstant: 50),
             playAgainButton.widthAnchor.constraint(equalToConstant: 100)
         ])

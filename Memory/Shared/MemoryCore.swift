@@ -9,6 +9,12 @@ import Combine
 import ComposableArchitecture
 import UIKit
 
+public enum WinOrLost: Equatable {
+    case win
+    case lost
+    case none
+}
+
 public struct MemoryState: Equatable {
     var defaultMemoryCard = UIImage(named: "pokerBackground")!
     var emptyMemoryCard = UIImage()
@@ -17,6 +23,9 @@ public struct MemoryState: Equatable {
     var memoryCardsStateChanged: Loadable<[UIImage]> = .none
 
     var memoryCardsState: [UIImage] = []
+
+    var chances: Int = 3
+    var winOrLost: WinOrLost = .none
 }
 
 public enum MemoryAction {
@@ -26,6 +35,7 @@ public enum MemoryAction {
     case compareTwoCards(firstCard: UIImage, secondCard: UIImage)
     case closeAllCards
     case endGame
+    case none
 }
 
 public struct MemoryEnvironment {}
@@ -36,6 +46,8 @@ let memoryReducer = Reducer<MemoryState, MemoryAction, MemoryEnvironment> { stat
         struct GameID: Hashable {}
 
         state.memoryCardsStateChanged = .loading
+        state.chances = 3
+        state.winOrLost = .none
 
         return Effect(value: .assignAllCards)
             .debounce(id: GameID(), for: 1.0, scheduler: DispatchQueue.main)
@@ -98,11 +110,18 @@ let memoryReducer = Reducer<MemoryState, MemoryAction, MemoryEnvironment> { stat
         } else {
             state.memoryCardsState[indices[0]] = state.defaultMemoryCard
             state.memoryCardsState[indices[1]] = state.defaultMemoryCard
+
+            state.chances -= 1
+
+            if state.chances < 1 {
+                state.winOrLost = .lost
+            }
         }
 
         state.memoryCardsStateChanged = .loaded(state.memoryCardsState)
 
         if state.memoryCardsState.filter({ $0 != state.emptyMemoryCard }).count <= 0 {
+            state.winOrLost = .win
             return Effect(value: .endGame)
         }
 
@@ -119,6 +138,9 @@ let memoryReducer = Reducer<MemoryState, MemoryAction, MemoryEnvironment> { stat
         state.memoryCardsState = []
         state.memoryCardsStateChanged = .loaded(state.memoryCardsState)
 
+        return .none
+
+    case .none:
         return .none
     }
 }
