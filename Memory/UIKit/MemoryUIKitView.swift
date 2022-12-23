@@ -81,9 +81,12 @@ class MemoryUIKitView: UIView {
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(MemoryUIKitCell.self, forCellWithReuseIdentifier: memoryUIKitCellKey)
+        collectionView.register(MemoryUIKitCell.self,
+                                forCellWithReuseIdentifier: memoryUIKitCellKey)
 
-        playAgainButton.addTarget(self, action: #selector(playGameAgain), for: .touchUpInside)
+        playAgainButton.addTarget(self,
+                                  action: #selector(playGameAgain),
+                                  for: .touchUpInside)
 
         addSubview(loadingIndicator)
         addSubview(collectionView)
@@ -124,12 +127,15 @@ class MemoryUIKitView: UIView {
 }
 
 extension MemoryUIKitView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         memoryCards.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: memoryUIKitCellKey, for: indexPath) as! MemoryUIKitCell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: memoryUIKitCellKey,
+                                                      for: indexPath) as! MemoryUIKitCell
 
         if firstAppearance {
             cell.alpha = 0
@@ -139,7 +145,9 @@ extension MemoryUIKitView: UICollectionViewDataSource {
 
             let delay = sqrt(Double(indexPath.row)) * 0.2
 
-            UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 10) {
+            UIView.animate(withDuration: 0.3, delay: delay,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 10) {
                 cell.alpha = 1
                 cell.transform = .identity
             }
@@ -156,11 +164,14 @@ extension MemoryUIKitView: UICollectionViewDataSource {
 }
 
 extension MemoryUIKitView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: bounds.width / 3.6, height: bounds.width / 3.6)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         guard let didSelect = self.didSelect else { return }
 
         didSelect(indexPath.row)

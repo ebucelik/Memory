@@ -87,10 +87,14 @@ struct MemorySwiftUI: View {
                         }) {
                             Image(uiImage: memoryCards[index])
                                 .resizable()
-                                .frame(maxWidth: geometryProxy.size.width / 4, maxHeight: geometryProxy.size.width / 4)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: geometryProxy.size.width / 4,
+                                       maxHeight: geometryProxy.size.width / 4)
+
                         }
                         .opacity(showMemoryCard ? 1 : 0)
-                        .animation(Animation.easeInOut(duration: 0.3).delay(animationDelay * Double(index)), value: showMemoryCard)
+                        .animation(Animation.easeInOut(duration: 0.3).delay(animationDelay * Double(index)),
+                                   value: showMemoryCard)
                     }
                 }
                 .padding(.horizontal)
@@ -122,14 +126,9 @@ struct MemorySwiftUI: View {
             viewStore.send(.startGame)
             showMemoryCard = false
         }) {
-            Text("Play again")
-                .frame(maxWidth: 100)
+            Text("Play again").frame(maxWidth: 100)
                 .padding()
-                .foregroundColor(.black)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(.black, lineWidth: 1)
-                )
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(.black, lineWidth: 1))
         }
     }
 }
